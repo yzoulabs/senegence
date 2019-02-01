@@ -8,7 +8,7 @@ import com.squareup.picasso.Picasso
 import zou.yuchen.senegence.R
 import zou.yuchen.senegence.model.RedditPost
 
-class RedditPostViewholder(postView: View) : RecyclerView.ViewHolder(postView), RedditPostView {
+class RedditPostViewholder(val postView: View) : RecyclerView.ViewHolder(postView), RedditPostView {
 
     private val titleView: TextView = postView.findViewById(R.id.title)
     private val authorView: TextView = postView.findViewById(R.id.author)
@@ -29,8 +29,14 @@ class RedditPostViewholder(postView: View) : RecyclerView.ViewHolder(postView), 
     }
 
     override fun setImage(imageUrl: String) {
+        val displayMetrics = postView.resources.displayMetrics
+        val screenWidth = displayMetrics.widthPixels / displayMetrics.density
+
         Picasso.get()
             .load(imageUrl)
+            .placeholder(R.drawable.ic_placeholder)
+            .resize(screenWidth.toInt(), 0)
+            .onlyScaleDown()
             .into(imageView)
     }
 }

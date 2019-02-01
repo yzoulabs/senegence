@@ -1,6 +1,7 @@
 package zou.yuchen.senegence.network
 
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RedditRestClient {
@@ -11,7 +12,7 @@ class RedditRestClient {
         lateinit var redditClient: Retrofit
 
         fun getRedditApi(): RedditApi {
-            if (isInitialized) {
+            if (!isInitialized) {
                 initRedditClient()
             }
 
@@ -22,6 +23,7 @@ class RedditRestClient {
             redditClient = Retrofit.Builder()
                 .baseUrl(redditUrl)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
 
             isInitialized = true

@@ -1,4 +1,4 @@
-package zou.yuchen.senegence
+package zou.yuchen.senegence.ui
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
@@ -22,8 +22,8 @@ class RedditViewModel : ViewModel() {
 
     private fun loadPosts() {
         RedditRestClient.getRedditApi().getTopPosts()
-            .observeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { response ->
                 val newPosts = ArrayList<RedditPost>()
                 if (response != null) {
